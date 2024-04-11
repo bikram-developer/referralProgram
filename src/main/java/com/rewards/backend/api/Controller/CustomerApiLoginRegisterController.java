@@ -29,6 +29,7 @@ private final CustomerService customerService;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		return null;
 	}
 
 }

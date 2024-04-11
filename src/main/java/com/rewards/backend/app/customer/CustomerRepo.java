@@ -8,13 +8,33 @@ import org.springframework.data.repository.query.Param;
 @EnableJpaRepositories
 public interface CustomerRepo extends JpaRepository<Customer, Long>{
 
-	@Query(value = """
+@Query(value = """
 select * from customer where email = :email
 """,nativeQuery = true)
-	String getPassword(@Param("email")String email);
+String getCustomerDetails(@Param("email")String email);
 	
 @Query(value = """
-s
+select count(id) from customer where email = :email
 """,nativeQuery = true)
-	int countNoOfActiveEmails throws MultipleCreatedPersonToDeal;
+int countNoOfActiveEmails(@Param("email")String email) ;
+
+@Query(value = """
+select password from customer where email = :email
+""",nativeQuery = true)
+String getPassword(@Param("email")String email) ;
+
+@Query(value="""
+SELECT * FROM customer WHERE email = :email AND password = :password
+""",nativeQuery = true)
+Customer getCustomerFromDbIfTrue(@Param("email") String email,@Param("password") String password);
+
+@Query(value="""
+SELECT is_active FROM customer WHERE email = :email 
+""",nativeQuery = true)
+boolean CustomerStatus(@Param("email")String email);
+
+@Query(value="""
+SELECT is_locked FROM customer WHERE email = :email 
+""",nativeQuery = true)
+boolean loginStatus(@Param("email")String email);
 }

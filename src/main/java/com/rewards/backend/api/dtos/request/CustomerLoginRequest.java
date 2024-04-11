@@ -15,4 +15,5 @@ public class CustomerLoginRequest {
 	private String ip;
 	private String email;
 	private String address;
+	private String password;
 }

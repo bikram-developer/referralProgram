@@ -14,4 +14,5 @@ public class CustomerLoginResponse {
 	private String token;
 	private String sessionId;
 	private String LoginStatus;
+	private String message;
 }
