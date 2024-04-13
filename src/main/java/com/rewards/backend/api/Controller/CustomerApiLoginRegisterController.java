@@ -3,6 +3,7 @@ package com.rewards.backend.api.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,6 @@ import com.rewards.backend.exception.CustomerRegistrationException;
 import com.rewards.backend.exception.InvalidEmailException;
 import com.rewards.backend.exception.InvalidPhoneNumberException;
 
-import io.swagger.annotations.Api;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -49,8 +49,8 @@ private final CustomerService customerService;
 		}
 	}
 	
-	@PostMapping(value = "/register")
-    public ResponseEntity<Object> userRegister(@RequestBody CustomerRegistrationDto entity) {
+	@PostMapping(value = "old/register")
+    public ResponseEntity<Object> userRegisterOld(@RequestBody CustomerRegistrationDto entity) {
         try {
             customerService.customerRegister(entity);
             return ResponseHandler.generateResponse(entity, HttpStatus.OK, "Customer Created");
@@ -60,4 +60,17 @@ private final CustomerService customerService;
 			return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Error");
 		}
     }
+	
+	 @PostMapping("/register/{code}")
+	    public ResponseEntity<Object> userRegister(@RequestBody CustomerRegistrationDto entity,
+	    		@PathVariable String referralCode) {
+	        try {
+	            customerService.customerRegisterWithReferral(entity,referralCode);
+	            return ResponseHandler.generateResponse(entity, HttpStatus.OK, "Customer Created");
+	        } catch (InvalidPhoneNumberException | InvalidEmailException | CustomerRegistrationException e) {
+	            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, "Failed to create customer");
+	        } catch (Exception e) {
+	            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Error");
+	        }
+	    }
 }

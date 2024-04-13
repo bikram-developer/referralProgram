@@ -33,4 +33,9 @@ public class Customer {
 	private boolean isLocked;
 	private boolean isFreezed;
 	private boolean isActive;
+	
+	private String referralCode;
+	private Long referrerId;
+	private int referralCount;
+	private boolean rewarded;
 }

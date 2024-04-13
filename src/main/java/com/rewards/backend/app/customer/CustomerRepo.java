@@ -42,4 +42,10 @@ boolean CustomerStatus(@Param("email")String email);
 SELECT is_locked FROM customer WHERE email = :email 
 """,nativeQuery = true)
 boolean loginStatus(@Param("email")String email);
+
+@Query("SELECT c FROM Customer c WHERE c.referralCode = :referralCode")
+Customer findByReferralCode(@Param("referralCode") String referralCode);
+
+@Query("SELECT COUNT(c) FROM Customer c WHERE c.referrerId = :referrerId")
+int countReferralsByReferrerId(@Param("referrerId") Long referrerId);
 }

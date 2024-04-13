@@ -19,4 +19,5 @@ public class CustomerRegistrationDto {
 	private String address2;
 	private String state;
 	private String pincode;
+	private String referralCode;
 }

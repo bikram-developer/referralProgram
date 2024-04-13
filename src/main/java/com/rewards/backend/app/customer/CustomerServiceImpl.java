@@ -4,10 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.rewards.backend.ResponseHandler;
+import com.rewards.backend.api.dtos.CustomerReferralStatus;
 import com.rewards.backend.api.dtos.CustomerRegistrationDto;
 import com.rewards.backend.api.dtos.mapperClass.CustomerMapper;
 import com.rewards.backend.api.dtos.request.CustomerLoginRequest;
@@ -18,6 +19,7 @@ import com.rewards.backend.exception.CustomerRegistrationException;
 import com.rewards.backend.exception.CustomerStatusInactiveException;
 import com.rewards.backend.exception.InvalidEmailException;
 import com.rewards.backend.exception.InvalidPhoneNumberException;
+import com.rewards.backend.exception.ReferrerAlreadyExistsException;
 import com.rewards.backend.validator.CustomerValidator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -96,6 +98,22 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
+    public void addReferrer(Long customerId, Long referrerId) {
+        Optional<Customer> customerOptional = customerRepo.findById(customerId);
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            if (customer.getReferrerId() == null) {
+                customer.setReferrerId(referrerId);
+                customerRepo.save(customer);
+            } else {
+                throw new ReferrerAlreadyExistsException("Customer already has a referrer");
+            }
+        } else {
+            throw new CustomerNotFoundException("Customer with ID " + customerId + " not found");
+        }
+    }
+	
+	@Override
 	public void customerRegister(CustomerRegistrationDto entity) {
 		checkEmail(entity.getEmail());
 		checkPhoneNumber(entity.getMobileNumber());
@@ -146,4 +164,56 @@ public class CustomerServiceImpl implements CustomerService{
 			throw new CustomException(e.getMessage());
 		}
 	}
+	
+	 @Override
+	    public void referCustomer(String referralCode, Long referrerId) {
+	        Customer referredCustomer = customerRepo.findByReferralCode(referralCode);
+	        if (referredCustomer != null && referredCustomer.getReferrerId() == null) {
+	            referredCustomer.setReferrerId(referrerId);
+	            customerRepo.save(referredCustomer);
+	            // Increment referral count for the referrer
+	            Optional<Customer> customer = customerRepo.findById(referrerId);
+	            if(!customer.isPresent()) {throw new CustomerNotFoundException("Customer with ID " + referrerId + " not found");}
+	            Customer referrer = customer.get();
+	            referrer.setReferralCount(referrer.getReferralCount() + 1);
+	            customerRepo.save(referrer);
+	        }
+	    }
+
+	 @Override
+	    public CustomerReferralStatus getReferralStatus(Long customerId) {
+	        Optional<Customer> customerOptional = customerRepo.findById(customerId);
+	        if (customerOptional.isPresent()) {
+	            Customer customer = customerOptional.get();
+	            int referralsMade = customer.getReferralCount();
+	            boolean rewarded = customer.isRewarded();
+	            int referralsNeededForReward = calculateReferralsNeededForReward(referralsMade);
+	            return new CustomerReferralStatus(referralsMade, rewarded, referralsNeededForReward);
+	        } else {
+	            throw new CustomerNotFoundException("Customer with ID " + customerId + " not found");
+	        }
+	    }
+
+	    private int calculateReferralsNeededForReward(int referralsMade) {
+	        int rewardThreshold = 5; // Change this value as needed
+	        return Math.max(0, rewardThreshold - referralsMade);
+	    }
+	    
+	    @Override
+	    public void customerRegisterWithReferral(CustomerRegistrationDto entity, String referralCode) {
+	        checkEmail(entity.getEmail());
+	        checkPhoneNumber(entity.getMobileNumber());
+	        Customer customer = register(entity);
+	        if (referralCode != null && !referralCode.isEmpty()) {
+	            applyReferral(customer, referralCode);
+	        }
+	    }
+
+	    private void applyReferral(Customer customer, String referralCode) {
+	        Customer referrer = customerRepo.findByReferralCode(referralCode);
+	        if (referrer != null) {
+	            customer.setReferrerId(referrer.getId());
+	            customerRepo.save(customer);
+	        }
+	    }
 }
