@@ -19,6 +19,11 @@ select count(id) from customer where email = :email
 int countNoOfActiveEmails(@Param("email")String email) ;
 
 @Query(value = """
+select count(id) from customer where mobile_number = :number
+""",nativeQuery = true)
+int countNoOfNumberPresent(@Param("number")String number) ;
+
+@Query(value = """
 select password from customer where email = :email
 """,nativeQuery = true)
 String getPassword(@Param("email")String email) ;

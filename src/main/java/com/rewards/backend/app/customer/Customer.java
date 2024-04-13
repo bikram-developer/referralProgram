@@ -23,7 +23,7 @@ public class Customer {
 	private String name;
 	private String email;
 	private String mobileNumber;
-	private String pasword;
+	private String password;
 	private String address1;
 	private String address2;
 	private String pinCode;
