@@ -19,11 +19,9 @@ public interface CustomerService {
 	
     void referCustomer(String referralCode, Long referrerId);
 
-    CustomerReferralStatus getReferralStatus(Long customerId);
+    List<CustomerReferralStatus> getReferralStatus(Long customerId);
 
 	public void addReferrer(Long customerId, Long referrerId);
 	
-    void customerRegisterWithReferral(CustomerRegistrationDto entity, String referralCode);
-
-	
+    void customerRegisterWithReferral(CustomerRegistrationDto entity);
 }

@@ -15,6 +15,7 @@ com\rewards\backend\exception\CustomerStatusInactiveException.class
 com\rewards\backend\app\security\OpenApiConfig.class
 com\rewards\backend\app\security\token\JwtRequest.class
 com\rewards\backend\exception\InvalidEmailException.class
+com\rewards\backend\utility\RandomNumberGenerator.class
 com\rewards\backend\api\PrePendApiName.class
 com\rewards\backend\validator\CustomerValidator.class
 com\rewards\backend\ResponseHandler.class

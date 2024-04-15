@@ -14,10 +14,12 @@ public class CustomerRegistrationDto {
 	private String name;
 	private String email;
 	private String password;
-	private String mobileNumber;
+//	private String mobileNumber;
 	private String address1;
 	private String address2;
 	private String state;
 	private String pincode;
 	private String referralCode;
+	private String parentReferralCode;
+	
 }

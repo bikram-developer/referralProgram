@@ -35,9 +35,6 @@ private final CustomerService customerService;
 	public ResponseEntity<?> userLogin(@RequestBody CustomerLoginRequest inputs, HttpServletRequest request) {
 		try {
 			CustomerLoginResponse customerLoginResponse = customerService.customerLogin(inputs);
-			System.out.println("In Controller ");
-			System.out.println(inputs.toString());
-			System.out.println("Out Controller ");
 			return ResponseHandler.generateResponse(customerLoginResponse, 
 					HttpStatus.OK, 
 					"Api call successfull");
@@ -61,16 +58,15 @@ private final CustomerService customerService;
 		}
     }
 	
-	 @PostMapping("/register/{code}")
-	    public ResponseEntity<Object> userRegister(@RequestBody CustomerRegistrationDto entity,
-	    		@PathVariable String referralCode) {
-	        try {
-	            customerService.customerRegisterWithReferral(entity,referralCode);
-	            return ResponseHandler.generateResponse(entity, HttpStatus.OK, "Customer Created");
-	        } catch (InvalidPhoneNumberException | InvalidEmailException | CustomerRegistrationException e) {
-	            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, "Failed to create customer");
-	        } catch (Exception e) {
-	            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Error");
-	        }
+	@PostMapping("/register")
+	public ResponseEntity<Object> userRegister(@RequestBody CustomerRegistrationDto entity) {
+	    try {
+	        customerService.customerRegisterWithReferral(entity);
+	        return ResponseHandler.generateResponse(entity, HttpStatus.OK, "Customer Created");
+	    } catch (InvalidPhoneNumberException | InvalidEmailException | CustomerRegistrationException e) {
+	        return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, "Failed to create customer");
+	    } catch (Exception e) {
+	        return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Error");
 	    }
+	}
 }

@@ -1,5 +1,7 @@
 package com.rewards.backend.api.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class ReferralController {
 	@GetMapping("/customers/{customerId}/referral-status")
     public ResponseEntity<?> getReferralStatus(@PathVariable Long customerId) {
         try {
-            CustomerReferralStatus referralStatus = customerService.getReferralStatus(customerId);
+            List<CustomerReferralStatus> referralStatus = customerService.getReferralStatus(customerId);
             return ResponseEntity.ok(referralStatus);
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
