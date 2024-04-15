@@ -18,6 +18,7 @@ com\rewards\backend\exception\InvalidEmailException.class
 com\rewards\backend\utility\RandomNumberGenerator.class
 com\rewards\backend\api\PrePendApiName.class
 com\rewards\backend\validator\CustomerValidator.class
+com\rewards\backend\api\Controller\HelloWorldController.class
 com\rewards\backend\ResponseHandler.class
 com\rewards\backend\app\security\users\UserModel.class
 com\rewards\backend\app\security\token\JwtRequest$JwtRequestBuilder.class

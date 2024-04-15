@@ -24,4 +24,6 @@ public interface CustomerService {
 	public void addReferrer(Long customerId, Long referrerId);
 	
     void customerRegisterWithReferral(CustomerRegistrationDto entity);
+
+	public String getReferralCode(String email);
 }

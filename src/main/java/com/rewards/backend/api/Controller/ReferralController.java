@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rewards.backend.ResponseHandler;
 import com.rewards.backend.api.dtos.CustomerReferralStatus;
 import com.rewards.backend.app.customer.CustomerService;
 import com.rewards.backend.exception.CustomerNotFoundException;
@@ -46,4 +48,15 @@ public class ReferralController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
     }
+	
+	@GetMapping(value = "/get/referralCode")
+	public ResponseEntity<?> getMethodName(@RequestParam String email) {
+		try {
+			
+			return ResponseHandler.generateResponse(customerService.getReferralCode(email), HttpStatus.OK, "OK");
+		} catch (Exception e) {
+			return ResponseHandler.generateResponse(email, HttpStatus.BAD_REQUEST, "failed to load data");
+		}
+	}
+
 }

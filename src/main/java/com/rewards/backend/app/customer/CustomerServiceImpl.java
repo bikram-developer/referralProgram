@@ -244,4 +244,14 @@ public class CustomerServiceImpl implements CustomerService{
 	        }
 	    }
 
+		@Override
+		public String getReferralCode(String email) {
+			try {
+				String referralCode = customerRepo.getCustomerReferralCode(email).orElse(null);
+				return referralCode;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+
 }

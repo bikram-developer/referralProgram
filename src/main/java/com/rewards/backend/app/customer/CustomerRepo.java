@@ -1,5 +1,7 @@
 package com.rewards.backend.app.customer;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -48,4 +50,7 @@ Customer findByReferralCode(@Param("referralCode") String referralCode);
 
 @Query("SELECT COUNT(c) FROM Customer c WHERE c.referrerId = :referrerId")
 int countReferralsByReferrerId(@Param("referrerId") Long referrerId);
+
+@Query(value = "select referral_code from customer where email = :email",nativeQuery= true)
+Optional<String> getCustomerReferralCode(@Param("email") String email);
 }
