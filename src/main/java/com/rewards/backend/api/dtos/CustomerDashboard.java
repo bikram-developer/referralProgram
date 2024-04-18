@@ -25,5 +25,4 @@ public class CustomerDashboard {
     private int referralCount;
     @JsonAlias(value="status")
     private boolean isActive;
-//    private List<>
 }

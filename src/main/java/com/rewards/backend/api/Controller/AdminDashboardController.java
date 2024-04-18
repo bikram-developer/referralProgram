@@ -3,6 +3,7 @@ package com.rewards.backend.api.Controller;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rewards.backend.ResponseHandler;
 import com.rewards.backend.api.dtos.CustomerDashboard;
+import com.rewards.backend.api.dtos.EachCustomerLeadData;
 import com.rewards.backend.api.dtos.mapperClass.CustomerMapper;
 import com.rewards.backend.app.customer.Customer;
 import com.rewards.backend.app.customer.CustomerService;
@@ -24,10 +26,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AdminDashboardController {
 
 	
+	private final CustomerMapper customerMapper; // Inject CustomerMapper
 	private final CustomerService customerService;
 	
-	public AdminDashboardController(CustomerService customerService) {
+	@Autowired
+	public AdminDashboardController(CustomerService customerService,CustomerMapper customerMapper) {
 		this.customerService = customerService;
+		this.customerMapper = customerMapper;
 	}
 	
 	@GetMapping(value = "allCustomers")
@@ -52,23 +57,27 @@ public class AdminDashboardController {
 		}
 	}
 	
+
 	@GetMapping(value = "customer")
 	public ResponseEntity<?> getCustomerDetails(@RequestParam String customerId,
-			HttpServletRequest request) {
-		try {
-			Customer response = customerService.getById(customerId);
-			return ResponseHandler.generateResponse(CustomerMapper.toDashboardList(response), 
-					HttpStatus.OK	, 
-					"Ok");
-		} catch (CustomException ce) {
-			ce.printStackTrace();
-			return ResponseHandler.generateResponse(ce.getMessage(), 
-					HttpStatus.BAD_REQUEST,
-					"Failed to load data");			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Failed to load data");
-		}
+	        HttpServletRequest request) {
+	    try {
+	        EachCustomerLeadData customerLeadData = customerMapper
+	                .toEachCustomerLeadData(customerService.getById(customerId));
+	        return ResponseHandler.generateResponse(customerLeadData,
+	                HttpStatus.OK,
+	                "Ok");
+	    } catch (CustomException ce) {
+	        ce.printStackTrace();
+	        return ResponseHandler.generateResponse(ce.getMessage(), 
+	                HttpStatus.BAD_REQUEST,
+	                "Failed to load data");           
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Failed to load data");
+	    }
 	}
+
+
 	
 }

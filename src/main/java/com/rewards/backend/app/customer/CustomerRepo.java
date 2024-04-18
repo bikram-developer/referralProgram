@@ -1,5 +1,6 @@
 package com.rewards.backend.app.customer;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,4 +54,10 @@ int countReferralsByReferrerId(@Param("referrerId") Long referrerId);
 
 @Query(value = "select referral_code from customer where email = :email",nativeQuery= true)
 Optional<String> getCustomerReferralCode(@Param("email") String email);
+
+@Query(value = """
+select * from customer 
+where referrer_id = :cid		
+""",nativeQuery = true)
+Optional<List<Customer>> getreferralInfoByCustomerId(@Param("cid") String customerId);
 }

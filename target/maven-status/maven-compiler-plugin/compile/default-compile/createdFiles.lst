@@ -19,6 +19,7 @@ com\rewards\backend\app\customer\Customer.class
 com\rewards\backend\api\dtos\CustomerReferralStatus.class
 com\rewards\backend\app\referral\CustomerReferralForm.class
 com\rewards\backend\exception\CustomException.class
+com\rewards\backend\api\dtos\EachCustomerLeadData.class
 com\rewards\backend\api\dtos\request\CustomerLoginRequest.class
 com\rewards\backend\app\security\MyConfig.class
 com\rewards\backend\app\security\token\JwtResponse$JwtResponseBuilder.class
