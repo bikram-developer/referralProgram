@@ -250,8 +250,11 @@ public class CustomerServiceImpl implements CustomerService{
 				String referralCode = customerRepo.getCustomerReferralCode(email).orElse(null);
 				return referralCode;
 			} catch (Exception e) {
-				return null;
+				throw new CustomException("Failed to view customer data");
 			}
 		}
+		
+		
+		
 
 }

@@ -1,9 +1,13 @@
 package com.rewards.backend.app.customer;
 
+import org.hibernate.annotations.Type;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +26,12 @@ public class Customer {
 	
 	private String name;
 	private String email;
-//	private String mobileNumber;
+	private String mobileNumber;
+    private String age;
+    private String gender;
+
 	private String password;
-	private String address1;
-	private String address2;
+	private String address;
 	private String pinCode;
 	private String state;
 	private String activityStatus;
@@ -38,4 +44,8 @@ public class Customer {
 	private Long referrerId;
 	private int referralCount;
 	private boolean rewarded;
+	
+	@Lob
+    @Column(name = "long_blob_data", nullable = false)
+    private byte[] profileImg;
 }

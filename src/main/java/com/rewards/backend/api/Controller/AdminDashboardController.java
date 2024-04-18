@@ -1,5 +1,6 @@
 package com.rewards.backend.api.Controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rewards.backend.ResponseHandler;
+import com.rewards.backend.api.dtos.CustomerDashboard;
+import com.rewards.backend.api.dtos.mapperClass.CustomerMapper;
 import com.rewards.backend.app.customer.Customer;
 import com.rewards.backend.app.customer.CustomerService;
 import com.rewards.backend.exception.CustomException;
@@ -30,7 +33,11 @@ public class AdminDashboardController {
 	public ResponseEntity<?> getAllCustomers(HttpServletRequest request) {
 		try {
 			List<Customer>response = customerService.getAllCustomer(request);
-			return ResponseHandler.generateResponse(response, 
+			List<CustomerDashboard> newResoponse= new LinkedList<>();
+			for(Customer customer : response) {
+			newResoponse.add(CustomerMapper.toDashboardList(customer));
+			}
+			return ResponseHandler.generateResponse(newResoponse, 
 					HttpStatus.OK	, 
 					"Ok");
 		} catch (CustomException ce) {
