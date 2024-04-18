@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerLoginResponse {
 
+	private String name;
 	private String customerEmail;
-	private String password;
 	private String token;
 	private String sessionId;
-	private String LoginStatus;
+	private boolean LoginStatus;
 	private String message;
 }

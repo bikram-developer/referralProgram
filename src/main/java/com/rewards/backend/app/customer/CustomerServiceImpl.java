@@ -65,9 +65,9 @@ public class CustomerServiceImpl implements CustomerService{
 				Customer customer = customerRepo.getCustomerFromDbIfTrue(email, password);
             CustomerLoginResponse customerLoginResponse = new CustomerLoginResponse();
             customerLoginResponse.setCustomerEmail(customer.getEmail());
-            customerLoginResponse.setLoginStatus(customer.getActivityStatus());
+            customerLoginResponse.setLoginStatus(customer.isActive());
             customerLoginResponse.setMessage(email + " successfull Login");
-            
+            customerLoginResponse.setName(customer.getName());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date currentDate = new Date();
             Calendar calendar = Calendar.getInstance();
