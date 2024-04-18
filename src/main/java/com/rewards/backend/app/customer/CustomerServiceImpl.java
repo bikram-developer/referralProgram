@@ -253,8 +253,10 @@ public class CustomerServiceImpl implements CustomerService{
 				throw new CustomException("Failed to view customer data");
 			}
 		}
-		
-		
-		
 
+		@Override
+		public Customer getById(String customerId) {
+			return customerRepo.findById(Long.parseLong(customerId)).get();
+		}
+		
 }

@@ -1,11 +1,8 @@
 package com.rewards.backend.app.security;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +18,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rewards.backend.ResponseHandler;
 import com.rewards.backend.app.security.token.JwtHelper;
 import com.rewards.backend.app.security.token.JwtRequest;
 import com.rewards.backend.app.security.token.JwtResponse;
-import com.rewards.backend.app.security.users.CustomUserDetailService;
 import com.rewards.backend.app.security.users.UserModel;
-import com.rewards.backend.app.security.users.UserRepository;
 import com.rewards.backend.app.security.users.UserService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-//import io.jsonwebtoken.security.SignatureException;
 import io.jsonwebtoken.security.SignatureException;
 
 @CrossOrigin("*")
@@ -45,18 +38,13 @@ public class AuthController {
 
 	 	@Autowired private UserDetailsService userDetailsService;
 	 	
-	 	@Autowired private UserRepository userRepo;
 	 	 
 	    @Autowired private AuthenticationManager manager;
 
-	    @Autowired private CustomUserDetailService customUserDetailService;
-	    
 	    @Autowired private JwtHelper helper;
 	    
 	    @Autowired private UserService userService;
 	    
-	    private Logger logger = LoggerFactory.getLogger(AuthController.class);
-
 	    @PostMapping("v-3/login")
 	    public ResponseEntity<Object> login(@RequestBody JwtRequest request) {
 	        this.doAuthenticate(request.getEmail(), request.getPassword());

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rewards.backend.ResponseHandler;
@@ -51,6 +52,23 @@ public class AdminDashboardController {
 		}
 	}
 	
-	
+	@GetMapping(value = "customer")
+	public ResponseEntity<?> getCustomerDetails(@RequestParam String customerId,
+			HttpServletRequest request) {
+		try {
+			Customer response = customerService.getById(customerId);
+			return ResponseHandler.generateResponse(CustomerMapper.toDashboardList(response), 
+					HttpStatus.OK	, 
+					"Ok");
+		} catch (CustomException ce) {
+			ce.printStackTrace();
+			return ResponseHandler.generateResponse(ce.getMessage(), 
+					HttpStatus.BAD_REQUEST,
+					"Failed to load data");			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "Failed to load data");
+		}
+	}
 	
 }

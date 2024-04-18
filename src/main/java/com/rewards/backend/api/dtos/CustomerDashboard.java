@@ -12,7 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDashboard {
-
+	
+	private long id;
     private String name;
     private byte[] profileImg;
     private String age;

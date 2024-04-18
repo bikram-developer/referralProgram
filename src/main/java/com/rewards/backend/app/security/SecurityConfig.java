@@ -37,7 +37,8 @@ public class SecurityConfig  {
     @Autowired
     private JwtAuthenticationFilter filter;
 
-    @Bean
+    @SuppressWarnings("removal")
+	@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .cors(request -> new CorsConfiguration().applyPermitDefaultValues())
@@ -87,8 +88,5 @@ public class SecurityConfig  {
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
-    }
-    private String getUsernameFromToken() {
-    	return this.getUsernameFromToken();
     }
 }
