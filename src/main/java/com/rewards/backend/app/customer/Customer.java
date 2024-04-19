@@ -1,5 +1,7 @@
 package com.rewards.backend.app.customer;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,10 @@ public class Customer {
 	private boolean isLocked;
 	private boolean isFreezed;
 	private boolean isActive;
+	
+	private boolean referralStatus;
+	
+	private boolean rewardAccess;
 	
 	private String referralCode;
 	private Long referrerId;

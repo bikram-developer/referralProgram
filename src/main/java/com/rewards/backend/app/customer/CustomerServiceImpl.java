@@ -4,16 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rewards.backend.api.dtos.CustomerReferralStatus;
 import com.rewards.backend.api.dtos.CustomerRegistrationDto;
-import com.rewards.backend.api.dtos.mapperClass.CustomerMapper;
+import com.rewards.backend.api.dtos.mapperClass.MapperClass;
 import com.rewards.backend.api.dtos.request.CustomerLoginRequest;
+import com.rewards.backend.api.dtos.request.UserPermissionUpdateRequest;
 import com.rewards.backend.api.dtos.response.CustomerLoginResponse;
+import com.rewards.backend.api.dtos.response.UserPermissionAll;
 import com.rewards.backend.exception.CustomException;
 import com.rewards.backend.exception.CustomerNotFoundException;
 import com.rewards.backend.exception.CustomerRegistrationException;
@@ -25,11 +30,14 @@ import com.rewards.backend.utility.RandomNumberGenerator;
 import com.rewards.backend.validator.CustomerValidator;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
 
 	private final CustomerRepo customerRepo;
+	@Autowired private MapperClass mapperClass;
+	
 	private static final String FAILED = "Failed to verify user";
 	public CustomerServiceImpl (CustomerRepo customerRepo) {
 		this.customerRepo= customerRepo;
@@ -117,7 +125,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	private Customer register(CustomerRegistrationDto entity) {
-		Customer customer = CustomerMapper.toCustomer(entity);
+		Customer customer = MapperClass.toCustomer(entity);
 		customer.setActive(true);
 		customer.setBanned(false);
 		customer.setFreezed(false);
@@ -260,6 +268,44 @@ public class CustomerServiceImpl implements CustomerService{
 			return customerRepo.findById(Long.parseLong(customerId)).get();
 		}
 		
+		@Override
+		public List<UserPermissionAll> getAllUserPermission(HttpServletRequest request) {
+			try {
+				List<Customer> customerList = customerRepo.findAll();
+				List<UserPermissionAll> responseList = new LinkedList<>(); 
+				for(Customer customer : customerList) {
+					responseList.add(mapperClass.toUserPermission(customer));
+				}
+				return responseList;
+			} catch (Exception e) {
+				throw new CustomException(FAILED);
+			}
+		}
 		
-		
+		@Override
+		@Transactional
+		public UserPermissionAll updateUserPermission(long userId, UserPermissionUpdateRequest request) {
+		    try {
+		        // Retrieve customer by ID
+		        Customer customer = customerRepo.findById(userId)
+		                .orElseThrow(() -> new CustomerNotFoundException("User not found"));
+
+		        // Update customer permission based on the request
+		        customer.setBanned(request.isBanned());
+		        customer.setLocked(request.isLocked());
+		        customer.setFreezed(request.isFreezed());
+		        customer.setActive(request.isActive());
+		        customer.setReferralStatus(request.isReferralStatus());
+		        customer.setRewardAccess(request.isRewardAccess());
+
+		        // Save the updated customer
+		        Customer savedCustomer = customerRepo.save(customer);
+		        return mapperClass.toUserPermission(savedCustomer);
+		    } catch (CustomerNotFoundException e) {
+		        throw e;
+		    } catch (Exception e) {
+		        throw new CustomException("Failed to update user permission");
+		    }
+		}
+
 }

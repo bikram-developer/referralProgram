@@ -1,6 +1,8 @@
+com\rewards\backend\api\dtos\request\UserPermissionUpdateRequest.class
 com\rewards\backend\app\security\users\CustomUserDetailService.class
 com\rewards\backend\ServletInitializer.class
 com\rewards\backend\app\customer\CustomerServiceImpl.class
+com\rewards\backend\api\Controller\UserPermissionController.class
 com\rewards\backend\app\security\token\JwtAuthenticationEntryPoint.class
 com\rewards\backend\api\dtos\CustomerRegistrationDto.class
 com\rewards\backend\app\security\AuthController.class
@@ -24,6 +26,7 @@ com\rewards\backend\api\dtos\request\CustomerLoginRequest.class
 com\rewards\backend\app\security\MyConfig.class
 com\rewards\backend\app\security\token\JwtResponse$JwtResponseBuilder.class
 com\rewards\backend\api\dtos\response\CustomerLoginResponse.class
+com\rewards\backend\api\dtos\response\UserPermissionAll.class
 com\rewards\backend\exception\InvalidPhoneNumberException.class
 com\rewards\backend\api\Controller\ReferralController.class
 com\rewards\backend\TEMP_PACKAGE\LoggingFilter.class
@@ -34,6 +37,7 @@ com\rewards\backend\utility\RandomNumberGenerator.class
 com\rewards\backend\api\PrePendApiName.class
 com\rewards\backend\validator\CustomerValidator.class
 com\rewards\backend\api\Controller\HelloWorldController.class
+com\rewards\backend\api\dtos\mapperClass\MapperClass.class
 com\rewards\backend\exception\ReferrerAlreadyExistsException.class
 com\rewards\backend\TEMP_PACKAGE\ExternalServiceHealthIndicator.class
 com\rewards\backend\api\dtos\CustomerDto.class
@@ -48,4 +52,3 @@ com\rewards\backend\app\security\users\AdminUserPannelConfig.class
 com\rewards\backend\api\Controller\CustomerApiLoginRegisterController.class
 com\rewards\backend\app\security\users\UserRepository.class
 com\rewards\backend\app\security\users\UserController.class
-com\rewards\backend\api\dtos\mapperClass\CustomerMapper.class

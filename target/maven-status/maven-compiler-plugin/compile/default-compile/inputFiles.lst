@@ -11,8 +11,8 @@ D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\referral\BackendVerificationForm.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\OpenApiConfig.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\referral\CustomerReferralForm.java
+D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\Controller\UserPermissionController.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\customer\CustomerRepo.java
-D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\mapperClass\CustomerMapper.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\exception\CustomerNotFoundException.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\request\CustomerLoginRequest.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\CustomerDto.java
@@ -21,10 +21,12 @@ D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\exceptio
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\AuthController.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\exception\CustomException.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\token\JwtRequest.java
+D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\response\UserPermissionAll.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\token\JwtAuthenticationEntryPoint.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\users\AdminUserPannelConfig.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\TEMP_PACKAGE\ExternalServiceHealthIndicator.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\exception\InvalidEmailException.java
+D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\request\UserPermissionUpdateRequest.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\response\CustomerLoginResponse.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\exception\CustomerStatusInactiveException.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\customer\CustomerServiceImpl.java
@@ -40,6 +42,7 @@ D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\utility\
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\token\JwtHelper.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\MyConfig.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\validator\CustomerValidator.java
+D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\mapperClass\MapperClass.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\api\dtos\CustomerReferralStatus.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\users\CustomUserDetailService.java
 D:\Busybox\Workspace\Referral_Program\src\main\java\com\rewards\backend\app\security\users\UserController.java

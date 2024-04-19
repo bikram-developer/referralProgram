@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rewards.backend.ResponseHandler;
 import com.rewards.backend.api.dtos.CustomerDashboard;
 import com.rewards.backend.api.dtos.EachCustomerLeadData;
-import com.rewards.backend.api.dtos.mapperClass.CustomerMapper;
+import com.rewards.backend.api.dtos.mapperClass.MapperClass;
 import com.rewards.backend.app.customer.Customer;
 import com.rewards.backend.app.customer.CustomerService;
 import com.rewards.backend.exception.CustomException;
@@ -26,11 +26,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AdminDashboardController {
 
 	
-	private final CustomerMapper customerMapper; // Inject CustomerMapper
+	private final MapperClass customerMapper; // Inject CustomerMapper
 	private final CustomerService customerService;
 	
 	@Autowired
-	public AdminDashboardController(CustomerService customerService,CustomerMapper customerMapper) {
+	public AdminDashboardController(CustomerService customerService,MapperClass customerMapper) {
 		this.customerService = customerService;
 		this.customerMapper = customerMapper;
 	}
@@ -41,7 +41,7 @@ public class AdminDashboardController {
 			List<Customer>response = customerService.getAllCustomer(request);
 			List<CustomerDashboard> newResoponse= new LinkedList<>();
 			for(Customer customer : response) {
-			newResoponse.add(CustomerMapper.toDashboardList(customer));
+			newResoponse.add(MapperClass.toDashboardList(customer));
 			}
 			return ResponseHandler.generateResponse(newResoponse, 
 					HttpStatus.OK	, 
