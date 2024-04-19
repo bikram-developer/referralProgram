@@ -15,8 +15,7 @@ public class CustomerRegistrationDto {
 	private String email;
 	private String password;
 //	private String mobileNumber;
-	private String address1;
-	private String address2;
+	private String address;
 	private String state;
 	private String pincode;
 	private String referralCode;

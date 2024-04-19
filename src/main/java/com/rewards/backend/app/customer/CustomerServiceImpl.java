@@ -122,6 +122,7 @@ public class CustomerServiceImpl implements CustomerService{
 		customer.setBanned(false);
 		customer.setFreezed(false);
 		customer.setLocked(false);
+		customer.setProfileImg(null);
 		customer.setReferralCode(generateReferralCode());
 		return customerRepo.saveAndFlush(customer);
 	}

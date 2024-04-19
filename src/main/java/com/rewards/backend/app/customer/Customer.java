@@ -44,6 +44,6 @@ public class Customer {
 	private boolean rewarded;
 	
 	@Lob
-    @Column(name = "long_blob_data", nullable = false)
+	@Column(columnDefinition = "LONGBLOB")
     private byte[] profileImg;
 }
