@@ -289,7 +289,7 @@ public class CustomerServiceImpl implements CustomerService{
 		        // Retrieve customer by ID
 		        Customer customer = customerRepo.findById(userId)
 		                .orElseThrow(() -> new CustomerNotFoundException("User not found"));
-
+		        System.err.println("Old Customer from db fetched "+ customer.toString());
 		        // Update customer permission based on the request
 		        customer.setBanned(request.isBanned());
 		        customer.setLocked(request.isLocked());
@@ -297,9 +297,10 @@ public class CustomerServiceImpl implements CustomerService{
 		        customer.setActive(request.isActive());
 		        customer.setReferralStatus(request.isReferralStatus());
 		        customer.setRewardAccess(request.isRewardAccess());
-
+		        System.err.println("Old customer after updating the values "+ customer.toString());
 		        // Save the updated customer
 		        Customer savedCustomer = customerRepo.save(customer);
+		        System.err.println("After saving the customer " + savedCustomer.toString());
 		        return mapperClass.toUserPermission(savedCustomer);
 		    } catch (CustomerNotFoundException e) {
 		        throw e;

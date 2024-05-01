@@ -60,4 +60,7 @@ select * from customer
 where referrer_id = :cid		
 """,nativeQuery = true)
 Optional<List<Customer>> getreferralInfoByCustomerId(@Param("cid") String customerId);
+
+@Query(value="select * from customer where customer_id = :customer_id", nativeQuery= true)
+Optional<Customer> findByCustomerId(@Param("customer_id") String CustomerId);
 }
